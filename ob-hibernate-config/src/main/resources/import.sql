@@ -1,0 +1,1 @@
+insert into ob_employees (age, birth_Date, email, first_Name, married, register_date, salary) values (40, null, "empleado1@company.com", "Empleado1", true, null, 6000.5);
