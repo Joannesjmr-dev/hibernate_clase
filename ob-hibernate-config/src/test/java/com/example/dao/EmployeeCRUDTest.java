@@ -11,7 +11,10 @@ import java.util.prefs.PreferenceChangeListener;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EmployeeDAOImplTest {
+/**
+ * Test para las operaciones CRUD
+ */
+class EmployeeCRUDTest {
 
     EmployeeDAO dao;
 

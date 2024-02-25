@@ -7,10 +7,18 @@ import java.util.List;
 public interface EmployeeDAO {
 
     /**
-     * Recuperar todos los empleados de base de datos de la tabla Employee
+     * Recuperar todos los empleados de base de datos de la tabla Employees
+     * Utiliza HQL
      * @return Lista de empleados
      */
     List<Employee> findAll();
+
+    /**
+     * Recuperar todos los empleados de base de datos de la tabla Employees
+     * Utiliza Criteria
+     * @return Lista de empleados
+     */
+    List<Employee> findAllCriteria();
 
     /**
      * Busca un empleado por su Id
@@ -18,6 +26,8 @@ public interface EmployeeDAO {
      * @return empleado
      */
     Employee findById(Long id);
+
+
 
     /**
      * Busca todos los empleados por edad

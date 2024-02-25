@@ -3,6 +3,9 @@ package com.example.dao;
 import com.example.entities.Employee;
 import com.example.util.HibernateUtil;
 import jakarta.persistence.PersistenceException;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -25,6 +28,23 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         session.close();
         return employees;
 
+    }
+
+    @Override
+    public List<Employee> findAllCriteria() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        // 1. Criteria
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Employee> criteria = builder.createQuery(Employee.class);
+        //Root<Employee> root = criteria.from(Employee.class);
+        //criteria.select(root);
+        criteria.select(criteria.from(Employee.class));
+
+        // 2. Query
+        List<Employee> employees = session.createQuery(criteria).list();
+        session.close();
+        return employees;
     }
 
     @Override
