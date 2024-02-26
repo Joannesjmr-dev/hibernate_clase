@@ -12,8 +12,5 @@
         <module name="ob-hibernate-config" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="ob-hibernate-config" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>

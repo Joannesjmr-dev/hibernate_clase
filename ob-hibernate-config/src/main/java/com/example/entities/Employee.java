@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
 Representa la tabla ob_employees en Base de Datos
@@ -35,6 +37,9 @@ public class Employee implements Serializable {
     @Column(name = "register_date")
     private LocalDateTime registerDate;
 
+    @ElementCollection
+    private List<String> nickNames = new ArrayList<>();
+
     //Cronstuctores
 
     public Employee() {
@@ -52,8 +57,6 @@ public class Employee implements Serializable {
     }
 
     //Getter & Setter
-
-
     public Long getId() {
         return id;
     }
@@ -118,6 +121,15 @@ public class Employee implements Serializable {
         this.registerDate = registerDate;
     }
 
+    public List<String> getNickNames() {
+        return nickNames;
+    }
+
+    public void setNickNames(List<String> nickNames) {
+        this.nickNames = nickNames;
+    }
+
+    // Método toString
     @Override
     public String toString() {
         return "Employee{" +
