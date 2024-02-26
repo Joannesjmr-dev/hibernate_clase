@@ -22,12 +22,19 @@ public interface EmployeeDAO {
 
     /**
      * Busca un empleado por su Id
+     * Utiliza metódos de Hibernate
      * @param id
      * @return empleado
      */
     Employee findById(Long id);
 
-
+    /**
+     * Busca un empleado por su Id
+     * Utiliza Criteria
+     * @param id
+     * @return empleado
+     */
+    Employee findByIdCriteria(Long id);
 
     /**
      * Busca todos los empleados por edad
@@ -35,6 +42,31 @@ public interface EmployeeDAO {
      * @return
      */
     List<Employee> findByAge(Integer age);
+
+    /**
+     * Filtrar por nombre
+     * Criteria utilizando like
+     * @param firstName
+     * @return
+     */
+    List<Employee> findByFirstNameLikeCriteria(String firstName);
+
+    /**
+     * Filtrar por edad. Mayor de determinado numero
+     * Criteria utilizando like
+     * @param age
+     * @return
+     */
+    List<Employee> findByAgeGreater18Criteria(Integer age);
+
+    /**
+     * Filtrar por rango de edad entre dos numeros
+     * Criteria utilizando like
+     * @param min
+     * @param max
+     * @return
+     */
+    List<Employee> findByAgeBetweenCriteria(Integer min, Integer max);
 
     /**
      * Inserta un nuevo registro en la tabla employees

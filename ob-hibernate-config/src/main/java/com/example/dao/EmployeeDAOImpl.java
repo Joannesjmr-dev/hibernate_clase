@@ -5,6 +5,7 @@ import com.example.util.HibernateUtil;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -58,12 +59,97 @@ public class EmployeeDAOImpl implements EmployeeDAO{
     }
 
     @Override
+    public Employee findByIdCriteria(Long id) {
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        // 1. Criteria
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Employee> criteria = builder.createQuery(Employee.class);
+        //Root<Employee> root = criteria.from(Employee.class);
+        //criteria.select(root);
+        Root<Employee> root = criteria.from(Employee.class);
+
+        Predicate filter = builder.equal(root.get("id"), id);
+        criteria.select(root).where(filter);
+
+        // 2. Query
+        Employee employee = session.createQuery(criteria).getSingleResult();
+        session.close();
+        return employee;
+    }
+
+    @Override
     public List<Employee> findByAge(Integer age) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query<Employee> query = session.createQuery("from Employee where age = :age", Employee.class);
         query.setParameter("age", age);
         List<Employee> employees = query.list();
 
+        session.close();
+        return employees;
+    }
+
+    @Override
+    public List<Employee> findByFirstNameLikeCriteria(String firstName) {
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        // 1. Criteria
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Employee> criteria = builder.createQuery(Employee.class);
+        //Root<Employee> root = criteria.from(Employee.class);
+        //criteria.select(root);
+        Root<Employee> root = criteria.from(Employee.class);
+
+        Predicate filter = builder.like(root.get("firstName"), "%"+firstName+"%");
+        criteria.select(root).where(filter);
+
+        // 2. Query
+        List<Employee> employees = session.createQuery(criteria).list();
+        session.close();
+        return employees;
+    }
+
+    @Override
+    public List<Employee> findByAgeGreater18Criteria(Integer age) {
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        // 1. Criteria
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Employee> criteria = builder.createQuery(Employee.class);
+        //Root<Employee> root = criteria.from(Employee.class);
+        //criteria.select(root);
+        Root<Employee> root = criteria.from(Employee.class);
+
+        Predicate filter = builder.gt(root.get("age"), age);
+        criteria.select(root).where(filter);
+
+        // 2. Query
+        List<Employee> employees = session.createQuery(criteria).list();
+        session.close();
+        return employees;
+
+    }
+
+    @Override
+    public List<Employee> findByAgeBetweenCriteria(Integer min, Integer max) {
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        // 1. Criteria
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Employee> criteria = builder.createQuery(Employee.class);
+        //Root<Employee> root = criteria.from(Employee.class);
+        //criteria.select(root);
+        Root<Employee> root = criteria.from(Employee.class);
+
+        Predicate filter = builder.between(root.get("age"), min, max);
+        criteria.select(root).where(filter);
+
+        // 2. Query
+        List<Employee> employees = session.createQuery(criteria).list();
         session.close();
         return employees;
     }

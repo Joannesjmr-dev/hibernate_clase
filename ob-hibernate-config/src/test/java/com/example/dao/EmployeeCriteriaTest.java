@@ -25,4 +25,28 @@ class EmployeeCriteriaTest {
         List<Employee> employees = dao.findAllCriteria();
         System.out.println(employees);
     }
+
+    @Test
+    void findByIdCriteria() {
+        Employee employee = dao.findByIdCriteria(1L);
+        System.out.println(employee);
+    }
+
+    @Test
+    void findByFirstNameLikeCriteria() {
+        List<Employee> employees = dao.findByFirstNameLikeCriteria("Empleado1");
+        System.out.println(employees);
+    }
+
+    @Test
+    void findByAgeGreater18Criteria() {
+        List<Employee> employees = dao.findByAgeGreater18Criteria(19);
+        System.out.println(employees);
+    }
+
+    @Test
+    void findByAgeBetweenCriteria() {
+        List<Employee> employees = dao.findByAgeBetweenCriteria(19, 25);
+        System.out.println(employees);
+    }
 }
